@@ -1,5 +1,5 @@
 class AddBroadcasts < ActiveRecord::Migration
-  def self.up
+  def self.change
     create_table :broadcasts do |t|
       t.references :creator, polymorphic: true
       t.string :title
@@ -13,9 +13,5 @@ class AddBroadcasts < ActiveRecord::Migration
 
       t.timestamps
     end
-  end
-
-  def self.down
-    drop_table :broadcasts
   end
 end

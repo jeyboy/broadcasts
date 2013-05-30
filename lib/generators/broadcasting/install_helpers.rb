@@ -1,4 +1,4 @@
-module EmailTemplate
+module Broadcasting
   module Generators
     module OrmHelpers
       def self.orm

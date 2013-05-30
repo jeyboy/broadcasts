@@ -1,4 +1,4 @@
-# Broadcast
+# Broadcasting
 
 Broadcast functionality gem
 
