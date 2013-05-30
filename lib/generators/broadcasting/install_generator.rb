@@ -20,10 +20,10 @@ module Broadcasting
         #STDOUT << 'config'
         #template 'templates/broadcasting_settings.rb', 'config/initializers/broadcasting_settings.rb'
 
-        if Gem::Specification::find_all_by_name('activeadmin').any?
-          STDOUT << 'activeadmin'
-          template 'templates/active_admin/broadcasts.rb', 'app/admin/broadcasts.rb'
-        end
+        #if Gem::Specification::find_all_by_name('activeadmin').any?
+        #  STDOUT << 'activeadmin'
+        #  template 'templates/active_admin/broadcasts.rb', 'app/admin/broadcasts.rb'
+        #end
       end
     end
   end

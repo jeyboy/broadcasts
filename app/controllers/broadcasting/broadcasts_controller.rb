@@ -1,13 +1,17 @@
 module Broadcasting
   class SuperController < ApplicationController
+    respond_to :js
+
+    #TODO: add to js - app key om ajax requests
+
     def index
-      @broadcasts = Broadcast.all
+      respond_with (@broadcasts = Broadcast.lived(params[:count]))
     end
 
     def destroy
-
+      #current_user
+      #Viewing.where()
+      render nothing: true
     end
-
-  #TODO   Add methods for statistic methods
   end
 end
