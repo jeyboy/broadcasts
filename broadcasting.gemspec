@@ -7,20 +7,20 @@ Gem::Specification.new do |spec|
   spec.name          = 'broadcasting'
   spec.version       = Broadcasting::VERSION
 
-  gem.authors       = ['Jenua Boiko']
-  gem.email         = ['jeyboy1985@gmail.com']
-  gem.description   = %Q{Broadcast functional}
-  gem.summary       = %Q{}
-  gem.homepage      = 'https://github.com/jeyboy/broadcast'
+  spec.authors       = ['Jenua Boiko']
+  spec.email         = ['jeyboy1985@gmail.com']
+  spec.description   = %Q{Broadcast functional}
+  spec.summary       = %Q{Broadcast functional}
+  spec.homepage      = 'https://github.com/jeyboy/broadcast'
   spec.license      = 'MIT'
 
-  gem.files         = `git ls-files`.split($\)
-  gem.executables   = gem.files.grep(%r{^bin/}).map{ |f| File.basename(f) }
-  gem.test_files    = gem.files.grep(%r{^(test|spec|features)/})
-  gem.require_paths = ["lib"]
-  gem.rubygems_version = %q{1.8.6}
+  spec.files         = `git ls-files`.split($\)
+  spec.executables   = spec.files.grep(%r{^bin/}).map{ |f| File.basename(f) }
+  spec.test_files    = spec.files.grep(%r{^(test|spec|features)/})
+  spec.require_paths = ["lib"]
+  spec.rubygems_version = %q{1.8.6}
 
-  gem.add_dependency('rails', '>= 3.1.0')
+  spec.add_dependency('rails', '>= 3.1.0')
   spec.add_development_dependency 'bundler', '~> 1.3'
   spec.add_development_dependency 'rake'
 end
