@@ -1,4 +1,6 @@
 class Broadcast < ActiveRecord::Base
+  attr_accessible :title, :content, :start_at, :end_at, :creator
+
   has_many :viewings, dependent: :destroy
   belongs_to :creator, polymorphic: true
 
@@ -10,11 +12,11 @@ class Broadcast < ActiveRecord::Base
 
 protected
   def start_date
-    errors(:start_at).add('Start date must be greater than current date') if start_at < DateTime.now
+    errors.add(:start_at, 'Start date must be greater than current date') if start_at < DateTime.now
   end
 
   def end_date
-    errors(:end_at).add('End date must be greater than current date') if end_at < DateTime.now
-    errors(:end_at).add('End date must be greater than start date') if start_at? && end_at < start_at
+    errors.add(:end_at, 'End date must be greater than current date') if end_at < DateTime.now
+    errors.add(:end_at, 'End date must be greater than start date') if start_at? && end_at < start_at
   end
 end
