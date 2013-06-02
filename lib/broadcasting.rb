@@ -1,4 +1,5 @@
-require 'broadcast/version'
+require 'broadcasting/version'
+require 'broadcasting/engine'
 
 module Broadcasting
   #mattr_accessor :yopt

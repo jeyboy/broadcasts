@@ -1,29 +1,42 @@
 require 'generators/broadcasting/install_helpers'
+#require 'rails/generators'
 
 module Broadcasting
   module Generators
-    class InstallGenerator < Rails::Generators::Base
+    class InstallGenerator < ::Rails::Generators::Base
       include Broadcasting::Generators::OrmHelpers
+      include ::Rails::Generators::Migration
 
       source_root File.expand_path('../../', __FILE__)
 
-      desc 'Creates initializer and migration. If ActiveAdmin install - copy page for broadcasts'
+      desc 'Creates initializer and migration.'
       class_option :orm
 
-      def copy_initializer
-        #unless migration_exists?('add_broadcasts')
-          STDOUT << 'migrations'
-          template 'active_record/add_broadcasts.rb', "db/migrate/#{Time.now.utc.strftime('%Y%m%d%H%M%S').to_i}_add_broadcasts.rb"
-          template 'active_record/add_viewings.rb', "db/migrate/#{Time.now.utc.strftime('%Y%m%d%H%M%S').to_i}_add_viewings.rb"
-        #end
+      def self.next_migration_number(dirname)
+        Time.now.strftime('%Y%m%d%H%M%S')
+      end
 
-        #STDOUT << 'config'
+      def mount_engine
+        STDOUT << 'engine'
+        route "mount Broadcasting::Engine => '/broadcasting'"
+      end
+
+      def add_initializer
+        STDOUT << 'initializer'
         #template 'templates/broadcasting_settings.rb', 'config/initializers/broadcasting_settings.rb'
+      end
 
-        #if Gem::Specification::find_all_by_name('activeadmin').any?
-        #  STDOUT << 'activeadmin'
-        #  template 'templates/active_admin/broadcasts.rb', 'app/admin/broadcasts.rb'
-        #end
+      def create_migration
+        if orm_has_migration?
+          migration_template "#{generator_dir}/add_broadcasts.rb", File.join(migration_path, 'add_broadcasts.rb')
+          sleep(1)
+          migration_template "#{generator_dir}/add_viewings.rb", File.join(migration_path, 'add_viewings.rb')
+        end
+      end
+
+protected
+      def generator_dir
+        @generator_dir ||= 'active_record'
       end
     end
   end
