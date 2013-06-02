@@ -1,5 +1,5 @@
 class AddBroadcasts < ActiveRecord::Migration
-  def self.change
+  def change
     create_table :broadcasts do |t|
       t.references :creator, polymorphic: true
       t.string :title

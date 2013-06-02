@@ -1,5 +1,7 @@
 module Broadcasting
-  class SuperController < ApplicationController
+  #before_filter :authenticate_user!
+
+  class BroadcastsController < ApplicationController
     respond_to :js
 
     #TODO: add to js - app key om ajax requests

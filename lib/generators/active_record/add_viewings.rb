@@ -1,5 +1,5 @@
 class AddViewings < ActiveRecord::Migration
-  def self.change
+  def change
     create_table :viewings do |t|
       t.references :viewer, polymorphic: true
       t.references :broadcast
