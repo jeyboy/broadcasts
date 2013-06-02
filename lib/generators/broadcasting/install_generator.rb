@@ -17,13 +17,11 @@ module Broadcasting
       end
 
       def mount_engine
-        STDOUT << 'engine'
         route "mount Broadcasting::Engine => '/broadcasting'"
       end
 
       def add_initializer
-        STDOUT << 'initializer'
-        #template 'templates/broadcasting_settings.rb', 'config/initializers/broadcasting_settings.rb'
+        template 'templates/broadcasting_settings.rb', 'config/initializers/broadcasting_settings.rb'
       end
 
       def create_migration
@@ -34,10 +32,10 @@ module Broadcasting
         end
       end
 
-protected
-      def generator_dir
-        @generator_dir ||= 'active_record'
-      end
+      protected
+        def generator_dir
+          @generator_dir ||= 'active_record'
+        end
     end
   end
 end
