@@ -21,6 +21,7 @@ Gem::Specification.new do |spec|
   spec.rubygems_version = %q{1.8.6}
 
   spec.add_dependency('rails', '>= 3.1.0')
+  spec.add_dependency('haml-rails')
   spec.add_development_dependency 'bundler', '~> 1.3'
   spec.add_development_dependency 'rake'
 end

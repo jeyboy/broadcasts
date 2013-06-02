@@ -7,5 +7,9 @@ module Broadcasting
 
   def self.setup
     yield self
+
+    #ActiveAdmin.setup do |config|
+    #  config.load_paths << [File.join('broadcasting', 'app', 'admin')]
+    #end
   end
 end
