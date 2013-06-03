@@ -29,9 +29,9 @@ module Broadcasting
         template 'templates/assets/broadcasting.js.coffee', 'app/assets/javascripts/broadcasting.js.coffee'
       end
 
-      def add_active_admin_pages
-        template 'templates/broadcast.rb', 'app/admin/broadcast.rb'
-      end
+      #def add_active_admin_pages
+      #  template 'templates/broadcast.rb', 'app/admin/broadcast.rb'
+      #end
 
       def create_migration
         if orm_has_migration?
