@@ -1,1 +1,5 @@
-%p Broadcast index part
+.broadcasts
+  - if broadcasts.present?
+
+  - else
+    = l(:no_broadcasts, default: 'No broadcasts presents')

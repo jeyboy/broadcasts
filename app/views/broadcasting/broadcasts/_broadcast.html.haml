@@ -1,1 +1,13 @@
-%p Broadcast part
+.broadcast
+  .body
+    %h3.title= broadcast.title
+    .content
+      = broadcast.content
+
+  .controls
+    .fl
+      = link_to l(:hide_this_broadcast, default: 'hide this broadcast'),
+
+    .fr
+      - if broadcasts_count > 0
+        = link_to l(:view_all_broadcasts, count: broadcasts_count, default: "View (#{broadcasts_count}) new broadcasts")

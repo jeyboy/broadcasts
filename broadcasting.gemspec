@@ -22,6 +22,9 @@ Gem::Specification.new do |spec|
 
   spec.add_dependency('rails', '>= 3.1.0')
   spec.add_dependency('haml-rails')
+  spec.add_dependency('coffee-rails')
+  spec.add_dependency('sass-rails')
+
   spec.add_development_dependency 'bundler', '~> 1.3'
   spec.add_development_dependency 'rake'
 end
