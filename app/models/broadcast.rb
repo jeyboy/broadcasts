@@ -12,11 +12,11 @@ class Broadcast < ActiveRecord::Base
 
 protected
   def start_date
-    errors.add(:start_at, 'Start date must be greater than current date') if start_at < DateTime.now
+    errors.add(:start_at, :greater_than_current) if start_at < DateTime.now
   end
 
   def end_date
-    errors.add(:end_at, 'End date must be greater than current date') if end_at < DateTime.now
-    errors.add(:end_at, 'End date must be greater than start date') if start_at? && end_at < start_at
+    errors.add(:end_at, :greater_than_current) if end_at < DateTime.now
+    errors.add(:end_at, :greater_than_start) if start_at? && end_at < start_at
   end
 end

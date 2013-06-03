@@ -1,0 +1,13 @@
+# Additional translations at https://github.com/plataformatec/devise/wiki/I18n
+
+en:
+  activerecord:
+    errors:
+      models:
+        broadcast:
+          attributes:
+            end_at:
+              greater_than_start: 'End date must be greater than start date'
+              greater_than_current: 'End date must be greater than current date'
+            start_at:
+              greater_than_current: 'Start date must be greater than current date'
