@@ -3,4 +3,13 @@
 # You can use CoffeeScript in this file: http://jashkenas.github.com/coffee-script/
 
 $ ->
-  alert('My alert')
+  $('body').on 'click', '.hide_broadcast', ->
+    $id = $(@).data('id')
+    alert($id)
+    $.ajax
+      url: '#'
+
+  $('body').on 'click', '.new_broadcasts', ->
+    alert('new')
+    $.ajax
+      url: '#'

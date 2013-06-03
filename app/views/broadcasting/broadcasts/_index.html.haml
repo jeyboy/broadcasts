@@ -1,5 +1,6 @@
 .broadcasts
   - if broadcasts.present?
-    = render broadcasts
+    - broadcasts.each do |broadcast|
+      = render partial: 'broadcast_object', object: broadcast
   - else
-    = l(:no_broadcasts, default: 'No broadcasts presents')
+    = t(:no_broadcasts, default: 'No broadcasts presents')
