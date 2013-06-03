@@ -9,5 +9,5 @@
       = link_to t(:hide_this_broadcast, default: 'hide this broadcast'), '#', 'data-id' => broadcast.id, class: 'hide_broadcast'
 
     .fr
-      - if broadcasts_count > 0
-        = link_to t(:view_all_broadcasts, count: broadcasts_count, default: "View (#{broadcasts_count}) new broadcasts"), '#', class: 'new_broadcasts'
+      - if broadcast_count > 0
+        = link_to t(:view_all_broadcasts, count: broadcast_count, default: "View (#{broadcast_count}) new broadcasts"), '#', class: 'new_broadcasts'
