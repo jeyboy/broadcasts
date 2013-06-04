@@ -14,4 +14,5 @@ $ ->
 
   $('body').on 'click', '.new_broadcasts', ->
     $.ajax
+      method: 'post'
       url: '/broadcasting/broadcasts_list'
