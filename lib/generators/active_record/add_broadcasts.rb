@@ -1,7 +1,7 @@
 class AddBroadcasts < ActiveRecord::Migration
   def change
     create_table :broadcasts do |t|
-      t.references :creator, polymorphic: true
+      t.belongs_to :creator, polymorphic: true
       t.string :title
       t.text :content
       t.datetime :start_at
