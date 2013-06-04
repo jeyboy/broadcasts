@@ -1,6 +1,6 @@
 ActiveAdmin.register Broadcast do
   config.sort_order = 'start_at_asc'
-  #config.batch_actions = false #comment this if you need batches
+  config.batch_actions = false #comment this if you need batches
 
   controller do
     def create
@@ -21,8 +21,6 @@ ActiveAdmin.register Broadcast do
 
     default_actions
   end
-
-  #actions :all, :except => [:destroy, :new]
 
   form do |f|
     f.inputs do
