@@ -6,12 +6,12 @@ class Viewing < ActiveRecord::Base
 
   validates :broadcast_id, presence: true
 
-  after_save :proceed_hidden_counter, if: :hidden_at_changed?
+  after_save ->(object) { object.proceed_hidden_counter(object.hidden_at? ? 1 : -1) },
+             if: :hidden_at_changed?
+  after_destroy ->(object) { object.proceed_hidden_counter(-1) }
 
 protected
-  def proceed_hidden_counter
-    broadcast.update_attributes do |obj|
-      obj.hidden_viewings_count += 1
-    end
+  def proceed_hidden_counter(offset)
+    broadcast.update_attributes(hidden_viewings_count: broadcast.hidden_viewings_count + offset)
   end
 end

@@ -1,5 +1,5 @@
 class Broadcast < ActiveRecord::Base
-  attr_accessible :title, :content, :start_at, :end_at, :creator
+  attr_accessible :title, :content, :start_at, :end_at, :creator, :hidden_viewings_count
 
   has_many :viewings, dependent: :destroy
   belongs_to :creator, polymorphic: true
