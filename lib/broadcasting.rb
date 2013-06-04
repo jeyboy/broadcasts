@@ -2,8 +2,8 @@ require 'broadcasting/version'
 require 'broadcasting/engine'
 
 module Broadcasting
-  #mattr_accessor :yopt
-  #self.yopt = []
+  mattr_accessor :truncate_length
+  self.truncate_length = 200
 
   def self.setup
     yield self

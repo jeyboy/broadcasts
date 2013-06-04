@@ -4,7 +4,10 @@
     .body
       %h3.title= broadcast.title
       .content
-        = broadcast.content
+        - if Broadcasting.truncate_length > 0
+          = truncate(broadcast.content, length: Broadcasting.truncate_length)
+        - else
+          = broadcast.content
 
     .controls
       .fl
