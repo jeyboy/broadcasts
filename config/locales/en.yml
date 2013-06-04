@@ -1,6 +1,10 @@
 # Additional translations at https://github.com/plataformatec/devise/wiki/I18n
 
 en:
+  no_broadcasts: 'No broadcasts presents at now'
+  hide_this_broadcast: 'Hide this broadcast'
+  view_all_broadcasts: 'View (%{count}) new broadcasts'
+
   activerecord:
     errors:
       models:

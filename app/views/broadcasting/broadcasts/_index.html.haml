@@ -4,4 +4,5 @@
       - # TODO: maybe redirect to _broadcast
       = render partial: 'broadcasting/broadcasts/broadcast_object', object: broadcast
   - else
-    = t(:no_broadcasts, default: 'No broadcasts presents')
+    -#= t(:no_broadcasts, default: 'No broadcasts presents')
+    = t(:no_broadcasts)

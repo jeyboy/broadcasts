@@ -11,8 +11,8 @@
 
     .controls
       .fl
-        = link_to t(:hide_this_broadcast, default: 'hide this broadcast'), '#', 'data-id' => broadcast.id, class: 'hide_broadcast'
+        = link_to t(:hide_this_broadcast), '#', 'data-id' => broadcast.id, class: 'hide_broadcast'
 
       .fr
         - if @broadcast_count.to_i > 0
-          = link_to t(:view_all_broadcasts, count: @broadcast_count, default: "View (#{@broadcast_count}) new broadcasts"), '#', class: 'new_broadcasts'
+          = link_to t(:view_all_broadcasts, count: @broadcast_count), '#', class: 'new_broadcasts'
