@@ -5,7 +5,7 @@ class AddViewings < ActiveRecord::Migration
       t.belongs_to :broadcast
 
       t.datetime :hidden_at
-      t.integer :impressions
+      t.integer :impressions, default: 0
 
       t.timestamps
     end

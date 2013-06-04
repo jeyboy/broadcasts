@@ -9,7 +9,7 @@ class AddBroadcasts < ActiveRecord::Migration
 
       t.integer :viewings_count, default: 0
       t.integer :hidden_viewings_count, default: 0
-      t.integer :impressions
+      t.integer :impressions, default: 0
 
       t.timestamps
     end
