@@ -7,10 +7,13 @@ module Broadcasting
     #TODO: add to js - app key om ajax requests
 
     def index
+      i = 0
       respond_with (@broadcasts = Broadcast.lived(params[:count]))
     end
 
     def destroy
+
+      i = 0
       #current_user
       #Viewing.where()
       render nothing: true

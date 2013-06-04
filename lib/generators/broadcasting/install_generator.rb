@@ -17,7 +17,7 @@ module Broadcasting
       end
 
       def mount_engine
-        route "mount Broadcasting::Engine => '/broadcasting'"
+        route "mount Broadcasting::Engine => '/broadcasting', as: 'broadcasting'"
       end
 
       def add_initializer

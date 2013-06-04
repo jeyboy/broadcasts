@@ -5,11 +5,13 @@
 $ ->
   $('body').on 'click', '.hide_broadcast', ->
     $id = $(@).data('id')
-    alert($id)
+    $broadcast = $(@).closest('.broadcast')
     $.ajax
-      url: '#'
+      method: 'delete'
+      url: "/broadcasting/close_broadcast/#{$id}"
+      success: ->
+        $broadcast.hide()
 
   $('body').on 'click', '.new_broadcasts', ->
-    alert('new')
     $.ajax
-      url: '#'
+      url: '/broadcasting/broadcasts_list'
