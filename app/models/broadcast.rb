@@ -8,7 +8,7 @@ class Broadcast < ActiveRecord::Base
   validate :end_date, if: :end_at?
   validate :start_date, if: :start_at?
 
-  scope :lived, ->(limit) {where('(current_date >= start_at OR start_at IS NULL) AND (end_at < current_date OR end_at IS NULL)', current_date: DateTime.now).limit(limit)}
+  scope :lived, ->(limit) {where('(:current_date >= start_at OR start_at IS NULL) AND (end_at > :current_date OR end_at IS NULL)', current_date: DateTime.now).limit(limit)}
 
 protected
   def start_date
