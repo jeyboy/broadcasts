@@ -1,5 +1,5 @@
-if defined? Broadcast
-  ActiveAdmin.register Broadcast do
+if ActiveRecord::Base.connection.table_exists? 'broadcasts'
+  ActiveAdmin.register Broadcasts::Broadcast, as: 'Broadcast' do
     config.sort_order = 'start_at_asc'
     config.batch_actions = false #comment this if you need batches
 
