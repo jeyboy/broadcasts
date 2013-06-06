@@ -4,8 +4,8 @@
     .body
       %h3.title= broadcast.title.to_s
       .content
-        - if Broadcasting.truncate_length > 0
-          = truncate(broadcast.content.to_s, length: Broadcasting.truncate_length)
+        - if Broadcasts.truncate_length > 0
+          = truncate(broadcast.content.to_s, length: Broadcasts.truncate_length)
         - else
           = broadcast.content.to_s
 
