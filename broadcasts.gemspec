@@ -1,17 +1,17 @@
 # coding: utf-8
 lib = File.expand_path('../lib', __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-require 'broadcasting/version'
+require 'broadcasts/version'
 
 Gem::Specification.new do |spec|
-  spec.name          = 'broadcasting'
-  spec.version       = Broadcasting::VERSION
+  spec.name          = 'broadcasts'
+  spec.version       = Broadcasts::VERSION
 
   spec.authors       = ['Jenua Boiko']
   spec.email         = ['jeyboy1985@gmail.com']
   spec.description   = %Q{Broadcast functional}
   spec.summary       = %Q{Broadcast functional}
-  spec.homepage      = 'https://github.com/jeyboy/broadcast'
+  spec.homepage      = 'https://github.com/jeyboy/broadcasts'
   spec.license      = 'MIT'
 
   spec.files         = `git ls-files`.split($\)

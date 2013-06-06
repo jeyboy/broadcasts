@@ -1,7 +1,7 @@
-require 'broadcasting/version'
-require 'broadcasting/engine'
+require 'broadcasts/version'
+require 'broadcasts/engine'
 
-module Broadcasting
+module Broadcasts
   mattr_accessor :truncate_length
   self.truncate_length = 200
 

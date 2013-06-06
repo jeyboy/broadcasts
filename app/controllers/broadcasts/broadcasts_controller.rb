@@ -1,4 +1,4 @@
-module Broadcasting
+module Broadcasts
   #before_filter :authenticate_user!
 
   class BroadcastsController < ApplicationController
@@ -8,7 +8,7 @@ module Broadcasting
 
     def index
       i = 0
-      respond_with (@broadcasts = Broadcast.lived(params[:count]))
+      respond_with (@broadcasts = Broadcast.live(params[:count]))
     end
 
     def destroy

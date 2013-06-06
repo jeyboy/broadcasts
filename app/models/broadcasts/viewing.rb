@@ -1,4 +1,4 @@
-class Viewing < ActiveRecord::Base
+class Broadcasts::Viewing < ActiveRecord::Base
   attr_accessible :broadcast_id, :viewer_id, :viewer_type, :hidden_at
 
   belongs_to :broadcast, counter_cache: :viewings_count
