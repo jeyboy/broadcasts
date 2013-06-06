@@ -1,8 +1,5 @@
 .broadcasts
   - if @broadcasts.present?
-    - @broadcasts.each do |broadcast|
-      - # TODO: maybe redirect to _broadcast
-      = render partial: 'broadcasting/broadcasts/broadcast_object', object: broadcast
+    = render @broadcasts
   - else
-    -#= t(:no_broadcasts, default: 'No broadcasts presents')
     = t(:no_broadcasts)
