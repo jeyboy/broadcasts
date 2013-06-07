@@ -1,5 +1,5 @@
 class Broadcasts::Broadcast < ActiveRecord::Base
-  set_table_name 'broadcasts'
+  self.table_name = 'broadcasts'
   attr_accessible :title, :content, :start_at, :end_at, :creator, :hidden_viewings_count
 
   has_many :viewings, dependent: :destroy

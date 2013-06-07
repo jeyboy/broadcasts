@@ -1,5 +1,7 @@
 class Broadcasts::Viewing < ActiveRecord::Base
-  set_table_name 'viewings'
+  self.table_name = 'viewings'
+
+  scope :by_viewer, ->(man) { where(viewer_type: man.class.name, viewer_id: man.id)}
 
   attr_accessible :broadcast_id, :viewer_id, :viewer_type, :hidden_at
 

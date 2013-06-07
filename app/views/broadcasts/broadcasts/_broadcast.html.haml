@@ -1,14 +1,13 @@
 - if broadcast
   .broadcast.container
     .body
+      .fr
+        = link_to t('broadcasts.hide_this_broadcast'), '#', 'data-id' => broadcast.id, class: 'hide_broadcast btn btn-inverse'
+
       %h3.title= broadcast.title.to_s
       .content
         = broadcast.content.to_s
 
-    .controls
-      .fl
-        = link_to t('broadcasts.hide_this_broadcast'), '#', 'data-id' => broadcast.id, class: 'hide_broadcast'
-
-      .fr
-        - if @broadcast_count.to_i > 0
-          = link_to t('broadcasts.view_all_broadcasts', count: @broadcast_count), '#', class: 'new_broadcasts'
+      -#.fr
+      -#  - if @broadcast_count.to_i > 0
+      -#    = link_to t('broadcasts.view_all_broadcasts', count: @broadcast_count), '#', class: 'new_broadcasts'

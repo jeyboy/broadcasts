@@ -1,4 +1,8 @@
 $ ->
+  $.ajaxSetup beforeSend: (xhr) ->
+    token = $("meta[name='csrf-token']").attr("content")
+    xhr.setRequestHeader "X-CSRF-Token", token
+
   $('body').on 'click', '.hide_broadcast', ->
     $id = $(@).data('id')
     $broadcast = $(@).closest('.broadcast')
@@ -8,7 +12,7 @@ $ ->
       success: ->
         $broadcast.hide()
 
-  $('body').on 'click', '.new_broadcasts', ->
-    $.ajax
-      method: 'get'
-      url: 'broadcasts/broadcasts'
+#  $('body').on 'click', '.new_broadcasts', ->
+#    $.ajax
+#      method: 'get'
+#      url: 'broadcasts/broadcasts'
