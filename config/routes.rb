@@ -1,7 +1,8 @@
 Broadcasts::Engine.routes.draw do
-  scope module: 'broadcasts' do
-    resources :broadcasts, only: [:index, :destroy]
-    #match 'broadcasts_list' => 'broadcasts#index', via: :post, as: 'broadcasts_list'
-    #match 'close_broadcast/:id' => 'broadcasts#destroy', via: :delete, as: 'close_broadcast'
-  end
+  resources :broadcasts, only: [:index, :destroy]
 end
+
+Rails.application.routes.draw do
+  mount Broadcasts::Engine => '/broadcasts', as: 'broadcasts'
+end
+

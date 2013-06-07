@@ -1,20 +1,18 @@
-module Broadcasts
-  class BroadcastsController < ApplicationController
-    before_filter :authenticate_user!
-    respond_to :js
+class Broadcasts::BroadcastsController < ApplicationController
+  before_filter :authenticate_user!
+  respond_to :js
 
-    #TODO: add to js - app key om ajax requests
+  #TODO: add to js - app key om ajax requests
 
-    def index
-      respond_with (@broadcasts = Broadcast.live(params[:count]))
-    end
+  def index
+    respond_with (@broadcasts = Broadcasts::Broadcast.live(params[:count]))
+  end
 
-    def destroy
+  def destroy
 
-      i = 0
-      #current_user
-      #Viewing.where()
-      render nothing: true
-    end
+    i = 0
+    #current_user
+    #Viewing.where()
+    render nothing: true
   end
 end

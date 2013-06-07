@@ -4,11 +4,11 @@ $ ->
     $broadcast = $(@).closest('.broadcast')
     $.ajax
       method: 'delete'
-      url: "/broadcasts/close_broadcast/#{$id}"
+      url: "broadcasts/broadcasts/#{$id}"
       success: ->
         $broadcast.hide()
 
   $('body').on 'click', '.new_broadcasts', ->
     $.ajax
-      method: 'post'
-      url: '/broadcasts/broadcasts_list'
+      method: 'get'
+      url: 'broadcasts/broadcasts'
