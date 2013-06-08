@@ -12,10 +12,17 @@ class Broadcasts::Viewing < ActiveRecord::Base
 
   after_save ->(object) { object.proceed_hidden_counter(object.hidden_at? ? 1 : -1) },
              if: :hidden_at_changed?
+
+  after_save :update_impressions, if: :impressions_changed?
+
   after_destroy ->(object) { object.proceed_hidden_counter(-1) }
 
 protected
   def proceed_hidden_counter(offset)
     broadcast.update_attributes(hidden_viewings_count: broadcast.hidden_viewings_count + offset)
+  end
+
+  def update_impressions
+    broadcast.update_attributes(impressions: broadcast.impressions + (impressions - impressions_was))
   end
 end
