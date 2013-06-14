@@ -11,7 +11,8 @@ class Broadcasts::Broadcast < ActiveRecord::Base
 
   scope :live, ->(limit) {where('(:current_date >= start_at OR start_at IS NULL) AND (end_at > :current_date OR end_at IS NULL)', current_date: Time.zone.now).limit(limit)}
 
-  def self.broadcast_list(viewer_user, count)
+  def self.broadcast_list(viewer_user, count = 5)
+    raise Exception.new('Viewer not set') unless viewer_user
     broadcasts = self.live(count)
     broadcasts.each do |broadcast|
       viewing = broadcast.viewings.where(
