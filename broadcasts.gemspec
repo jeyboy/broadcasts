@@ -26,9 +26,10 @@ Gem::Specification.new do |spec|
   spec.add_dependency('sass-rails')
   spec.add_dependency('jquery-rails')
 
-  spec.add_dependency('rspec-rails', '~> 2.0')
-  spec.add_dependency('factory_girl')
-  spec.add_dependency('database_cleaner')
+  spec.add_development_dependency('rspec-rails', '~> 2.0')
+  spec.add_development_dependency('factory_girl')
+  spec.add_development_dependency('database_cleaner')
+  spec.add_development_dependency('sqlite3')
 
   spec.add_development_dependency 'bundler', '~> 1.3'
   spec.add_development_dependency 'rake'

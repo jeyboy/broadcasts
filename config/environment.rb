@@ -1,0 +1,1 @@
+#require File.expand_path('../../lib/broadcasts/engine', __FILE__)
