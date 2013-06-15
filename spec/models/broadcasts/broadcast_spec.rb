@@ -1,18 +1,20 @@
 require 'spec_helper'
 
 describe Broadcasts::Broadcast do
+  subject { Broadcasts::Broadcast }
+
   describe 'live scope' do
     before(:all) do
       @nil_dates_broadcast = create(:broadcast)
       @invalid_start_dates_broadcast = create(:broadcast, start_at: 2.minutes.ago)
-      @valid_start_dates_broadcast = FactoryGirl.create(:broadcast, start_at: 2.minutes.from_now)
-      @valid_end_dates_broadcast = FactoryGirl.create(:broadcast, end_at: 2.hours.from_now)
-      @invalid_end_dates_broadcast = FactoryGirl.create(:broadcast, end_at: 2.hours.ago)
-      @valid_both_dates_broadcasts = FactoryGirl.create(:broadcast, start_at: 2.minutes.ago, end_at: 2.hours.from_now)
-      @invalid_both_dates_broadcasts = FactoryGirl.create(:broadcast, start_at: 2.hours.ago, end_at: 1.hours.ago)
+      @valid_start_dates_broadcast = create(:broadcast, start_at: 2.minutes.from_now)
+      @valid_end_dates_broadcast = create(:broadcast, end_at: 2.hours.from_now)
+      @invalid_end_dates_broadcast = create(:broadcast, end_at: 2.hours.ago)
+      @valid_both_dates_broadcasts = create(:broadcast, start_at: 2.minutes.ago, end_at: 2.hours.from_now)
+      @invalid_both_dates_broadcasts = create(:broadcast, start_at: 2.hours.ago, end_at: 1.hours.ago)
     end
 
-    before { @broadcasts = Broadcasts::Broadcast.live(6) }
+    before { @broadcasts = subject.live(6) }
 
     it 'must include only valid entries' do
       @broadcasts.should include(
@@ -33,38 +35,55 @@ describe Broadcasts::Broadcast do
   end
 
   describe 'broadcast list' do
+    before { @user = create(:admin_user) }
+
     describe 'valid' do
       it 'must use default count' do
-
+        expect(subject.broadcast_list(@user)).to_not raise_error
       end
 
-      it 'must update impressions' do
+      describe 'must update impressions' do
+        it 'new viewing' do
+          Viewing.count.should eql? 0
+          @broadcasts = subject.broadcast_list(@user)
+          Viewing.count.should eql? @broadcasts.size
+        end
 
+        describe 'update viewing' do
+          before do
+            Broadcast.each do |broadcast|
+              broadcast.viewings.where(
+                  viewer_id: @user.id,
+                  viewer_type: @user.class.name
+              ).first_or_initialize
+            end
+          end
+
+          it 'wont create new record' do
+            viewing_count = Viewing.count
+            subject.broadcast_list(@user)
+            viewing_count.shouls eql? Viewing.count
+          end
+
+          it 'must iterate impressions' do
+            3.times do |i|
+              @broadcasts = subject.broadcast_list(@user)
+              @broadcasts.each do |broadcast|
+                broadcast.viewings.where(
+                    viewer_id: @user.id,
+                    viewer_type: @user.class.name
+                ).impressions.ssshould eql? i
+              end
+            end
+          end
+        end
       end
     end
 
     describe 'invalid' do
       it 'not set viewer' do
-
+        expect {subject.broadcast_list(nil)}.to raise_error(Exception, 'Viewer not set')
       end
     end
-  end
-end
-
-
-class Broadcasts::Broadcast < ActiveRecord::Base
-  scope :live, ->(limit) {where('(:current_date >= start_at OR start_at IS NULL) AND (end_at > :current_date OR end_at IS NULL)', current_date: Time.zone.now).limit(limit)}
-
-  def self.broadcast_list(viewer_user, count = 5)
-    raise Exception.new('Viewer not set') unless viewer_user
-    broadcasts = self.live(count)
-    broadcasts.each do |broadcast|
-      viewing = broadcast.viewings.where(
-          viewer_id: viewer_user.id,
-          viewer_type: viewer_user.class.name).first_or_initialize
-      viewing.impressions += 1
-      viewing.save
-    end
-    broadcasts
   end
 end

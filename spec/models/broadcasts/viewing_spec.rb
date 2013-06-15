@@ -1,28 +1,46 @@
-class Broadcasts::Viewing < ActiveRecord::Base
-  self.table_name = 'viewings'
+require 'spec_helper'
 
-  scope :by_viewer, ->(man) { where(viewer_type: man.class.name, viewer_id: man.id)}
+describe Broadcasts::Viewing do
+  subject { Broadcasts::Viewing }
 
-  attr_accessible :broadcast_id, :viewer_id, :viewer_type, :hidden_at
+  describe 'by viewer scope' do
+    before do
+      @user, @other_user = create(:admin_user), create(:admin_user)
+      @user_viewings = (1..3).map {create(:viewing, viewer_type: @user.class.name, viewer_id: @user.id)}
+      @other_user_viewings = (1..3).map {create(:viewing, viewer_type: @other_user.class.name, viewer_id: @other_user.id)}
+      @viewings = subject.by_viewer(@user)
+    end
 
-  belongs_to :broadcast, counter_cache: :viewings_count
-  belongs_to :viewer, polymorphic: true
+    it 'must include only valid entries' do
+      @viewings.should include @user_viewings
+    end
 
-  validates :broadcast_id, presence: true
-
-  after_save ->(object) { object.proceed_hidden_counter(object.hidden_at? ? 1 : -1) },
-             if: :hidden_at_changed?
-
-  after_save :update_impressions, if: :impressions_changed?
-
-  after_destroy ->(object) { object.proceed_hidden_counter(-1) }
-
-protected
-  def proceed_hidden_counter(offset)
-    broadcast.update_attributes(hidden_viewings_count: broadcast.hidden_viewings_count + offset)
+    it 'must not include invalid entries' do
+      @viewings.should_not include @other_user_viewings
+    end
   end
 
-  def update_impressions
-    broadcast.update_attributes(impressions: broadcast.impressions + (impressions - impressions_was))
+  describe 'callbacks' do
+    before { @viewing = create(:viewing)}
+
+    it 'must increase hidden viewings' do
+      was_hidden_viewings_count = @viewing.broadcast.hidden_viewings_count
+      @viewing.hidden_at = Time.zone.now
+      @viewing.save
+      (@viewing.broadcast.hidden_viewings_count - was_hidden_viewings_count).should eql? 1
+    end
+
+    it 'must decrease hidden viewings' do
+      broadcast = @viewing.broadcast
+      @viewing.destroy
+      (broadcast.hidden_viewings_count_was - broadcast.hidden_viewings_count).should eql? 1
+    end
+
+    it 'must increase impressions' do
+      was_impressions = @viewing.broadcast.impressions
+      @viewing.impressions = @viewing.impressions + 1
+      @viewing.save
+      (@viewing.broadcast.impressions - was_impressions).should eql? 1
+    end
   end
 end
