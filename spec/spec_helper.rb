@@ -4,6 +4,8 @@ require File.expand_path('../../config/environment', __FILE__)
 require 'broadcasts'
 
 Dir[Broadcasts::Engine.root.join('app', 'models', 'broadcasts', '*.rb')].each {|file| require file }
+Dir[Broadcasts::Engine.root.join('spec/support/*.rb')].each { |f| require f }
+Dir[Broadcasts::Engine.root.join('spec/support/**/*.rb')].each { |f| require f }
 
 require 'factory_girl'
 FactoryGirl.find_definitions
@@ -13,13 +15,8 @@ ActiveRecord::Base.establish_connection(
     :database => ':memory:'
 )
 
-load_schema = lambda {
-  ActiveRecord::Migrator.up('db/migrate')
-  #load "#{Rails.root.to_s}/db/schema.rb" # use db agnostic schema by default
-  #                                       # ActiveRecord::Migrator.up('db/migrate') # use migrations
-}
+load_schema = lambda {ActiveRecord::Migrator.up(['db/migrate', 'spec/support/fake/db'])}
 silence_stream(STDOUT, &load_schema)
-
 
 require 'rails'
 require "rails/test_help"
@@ -29,8 +26,6 @@ require 'action_controller'
 require 'rspec/rails'
 require 'rspec/autorun'
 require 'database_cleaner'
-
-#Dir[Rails.root.join('spec/support/**/*.rb')].each { |f| require f }
 
 RSpec.configure do |config|
  # config.mock_with :mocha
