@@ -17,8 +17,9 @@ Gem::Specification.new do |spec|
   spec.files         = `git ls-files`.split($\)
   spec.executables   = spec.files.grep(%r{^bin/}).map{ |f| File.basename(f) }
   spec.test_files    = spec.files.grep(%r{^(test|spec|features)/})
-  spec.require_paths = ["lib"]
-  spec.rubygems_version = %q{1.8.6}
+  spec.require_paths = ['lib']
+  spec.rubygems_version = %q{1.9.2}
+
 
   spec.add_dependency('rails', '>= 3.1.0')
   spec.add_dependency('haml-rails')
