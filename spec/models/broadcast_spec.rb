@@ -4,7 +4,7 @@ describe Broadcasts::Broadcast do
   subject { Broadcasts::Broadcast }
 
   describe 'live scope' do
-    before(:all) do
+    before do
       @nil_dates_broadcast = create(:broadcast)
       @invalid_start_dates_broadcast = create(:broadcast, start_at: 1.minute.from_now)
       @valid_start_dates_broadcast = create(:broadcast, start_at: 2.minutes.from_now)
@@ -12,9 +12,8 @@ describe Broadcasts::Broadcast do
       @invalid_end_dates_broadcast = create(:broadcast, end_at: 1.seconds.from_now)
       @valid_both_dates_broadcasts = create(:broadcast, start_at: 1.seconds.from_now, end_at: 2.hours.from_now)
       sleep(2)
+      @broadcasts = subject.live(6)
     end
-
-    before { @broadcasts = subject.live(6) }
 
     it 'must include only valid entries' do
       @broadcasts.should include(

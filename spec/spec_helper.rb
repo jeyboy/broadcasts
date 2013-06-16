@@ -3,7 +3,8 @@ require File.expand_path('../../config/environment', __FILE__)
 
 require 'broadcasts'
 
-Dir[Broadcasts::Engine.root.join('app', 'models', 'broadcasts', '*.rb')].each {|file| require file }
+Dir[Broadcasts::Engine.root.join('app', '*', 'broadcasts', '*.rb')].each {|file| require file }
+
 Dir[Broadcasts::Engine.root.join('spec/support/*.rb')].each { |f| require f }
 Dir[Broadcasts::Engine.root.join('spec/support/**/*.rb')].each { |f| require f }
 
@@ -21,7 +22,6 @@ silence_stream(STDOUT, &load_schema)
 require 'rails'
 require "rails/test_help"
 require 'action_view'
-require 'action_controller'
 
 require 'rspec/rails'
 require 'rspec/autorun'
@@ -31,6 +31,7 @@ RSpec.configure do |config|
  # config.mock_with :mocha
 
   config.include FactoryGirl::Syntax::Methods
+  #config.include Broadcasts::Engine.routes.url_helpers
 
   #config.use_transactional_fixtures = false
   config.infer_base_class_for_anonymous_controllers = false

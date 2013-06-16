@@ -1,8 +1,10 @@
+require 'action_controller'
+
 module Broadcasts
-  class BroadcastsController < ApplicationController
-    #protect_from_forjery
+  class BroadcastsController < ActionController::Base
+    protect_from_forgery
     before_filter :authenticate_user!
-    respond_to :js
+    #respond_to :js
 
     def index
       respond_with (@broadcasts = Broadcasts::Broadcast.live(params[:count]))
