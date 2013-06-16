@@ -32,8 +32,9 @@ describe Broadcasts::Viewing do
 
     it 'must decrease hidden viewings' do
       broadcast = @viewing.broadcast
+      old_hidden_value = broadcast.hidden_viewings_count
       @viewing.destroy
-      (broadcast.hidden_viewings_count_was - broadcast.hidden_viewings_count).should eql 1
+      (old_hidden_value - broadcast.reload.hidden_viewings_count).should eql 1
     end
 
     it 'must increase impressions' do

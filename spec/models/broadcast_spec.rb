@@ -49,7 +49,7 @@ describe Broadcasts::Broadcast do
               broadcast.viewings.where(
                   viewer_id: @user.id,
                   viewer_type: @user.class.name
-              ).first_or_initialize
+              ).first_or_create
             end
           end
 
