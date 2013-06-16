@@ -4,10 +4,27 @@ if ActiveRecord::Base.connection.table_exists? 'broadcasts'
     config.batch_actions = false #comment this if you need batches
 
     controller do
-      def create
-        params[:broadcast][:creator] = current_admin_user
-        create!
-      end
+      before_filter :strong_params, only: [:create, :update]
+
+      protected
+        def strong_params
+          params[:broadcast]['creator'] = current_admin_user
+          params.require(:broadcast).permit(
+              'title',
+              'content',
+              'start_at(1i)',
+              'start_at(2i)',
+              'start_at(3i)',
+              'start_at(4i)',
+              'start_at(5i)',
+              'end_at(1i)',
+              'end_at(2i)',
+              'end_at(3i)',
+              'end_at(4i)',
+              'end_at(5i)',
+              'creator'
+          )
+        end
     end
 
     index do

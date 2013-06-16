@@ -22,6 +22,7 @@ Gem::Specification.new do |spec|
 
 
   spec.add_dependency('rails', '>= 3.1.0')
+  spec.add_dependency('strong_parameters')
   spec.add_dependency('haml-rails')
   spec.add_dependency('coffee-rails')
   spec.add_dependency('sass-rails')

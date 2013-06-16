@@ -20,11 +20,18 @@ module Broadcasts
 
   protected
     def proceed_hidden_counter(offset)
-      broadcast.update_attributes(hidden_viewings_count: broadcast.hidden_viewings_count + offset)
+      #parameters = ActionController::Parameters.new({ hidden_viewings_count: broadcast.hidden_viewings_count + offset })
+      #broadcast.update_attributes(parameters.permit(:hidden_viewings_count))
+
+      broadcast.hidden_viewings_count = broadcast.hidden_viewings_count + offset
+      broadcast.save
     end
 
     def update_impressions
-      broadcast.update_attributes(impressions: broadcast.impressions + (impressions - impressions_was))
+      #broadcast.update_attributes(impressions: broadcast.impressions + (impressions - impressions_was))
+
+      broadcast.impressions = broadcast.impressions + (impressions - impressions_was)
+      broadcast.save
     end
   end
 end
