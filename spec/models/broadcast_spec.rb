@@ -6,12 +6,12 @@ describe Broadcasts::Broadcast do
   describe 'live scope' do
     before(:all) do
       @nil_dates_broadcast = create(:broadcast)
-      @invalid_start_dates_broadcast = create(:broadcast, start_at: 2.minutes.ago)
+      @invalid_start_dates_broadcast = create(:broadcast, start_at: 1.minute.from_now)
       @valid_start_dates_broadcast = create(:broadcast, start_at: 2.minutes.from_now)
       @valid_end_dates_broadcast = create(:broadcast, end_at: 2.hours.from_now)
-      @invalid_end_dates_broadcast = create(:broadcast, end_at: 2.hours.ago)
-      @valid_both_dates_broadcasts = create(:broadcast, start_at: 2.minutes.ago, end_at: 2.hours.from_now)
-      @invalid_both_dates_broadcasts = create(:broadcast, start_at: 2.hours.ago, end_at: 1.hours.ago)
+      @invalid_end_dates_broadcast = create(:broadcast, end_at: 1.seconds.from_now)
+      @valid_both_dates_broadcasts = create(:broadcast, start_at: 1.seconds.from_now, end_at: 2.hours.from_now)
+      sleep(2)
     end
 
     before { @broadcasts = subject.live(6) }
@@ -19,7 +19,6 @@ describe Broadcasts::Broadcast do
     it 'must include only valid entries' do
       @broadcasts.should include(
                              @nil_dates_broadcast,
-                             @valid_start_dates_broadcast,
                              @valid_end_dates_broadcast,
                              @valid_both_dates_broadcasts
                          )
@@ -28,8 +27,7 @@ describe Broadcasts::Broadcast do
     it 'must not include invalid entries' do
       @broadcasts.should_not include(
                                  @invalid_start_dates_broadcast,
-                                 @invalid_end_dates_broadcast,
-                                 @invalid_both_dates_broadcasts
+                                 @invalid_end_dates_broadcast
                              )
     end
   end
@@ -38,20 +36,16 @@ describe Broadcasts::Broadcast do
     before { @user = create(:admin_user) }
 
     describe 'valid' do
-      it 'must use default count' do
-        expect(subject.broadcast_list(@user)).to_not raise_error
-      end
-
       describe 'must update impressions' do
         it 'new viewing' do
-          Viewing.count.should eql? 0
+          Broadcasts::Viewing.count.should eql 0
           @broadcasts = subject.broadcast_list(@user)
-          Viewing.count.should eql? @broadcasts.size
+          Broadcasts::Viewing.count.should eql @broadcasts.size
         end
 
         describe 'update viewing' do
           before do
-            Broadcast.each do |broadcast|
+            subject.all.each do |broadcast|
               broadcast.viewings.where(
                   viewer_id: @user.id,
                   viewer_type: @user.class.name
@@ -60,9 +54,9 @@ describe Broadcasts::Broadcast do
           end
 
           it 'wont create new record' do
-            viewing_count = Viewing.count
+            viewing_count = Broadcasts::Viewing.count
             subject.broadcast_list(@user)
-            viewing_count.shouls eql? Viewing.count
+            viewing_count.should eql Broadcasts::Viewing.count
           end
 
           it 'must iterate impressions' do
@@ -72,7 +66,7 @@ describe Broadcasts::Broadcast do
                 broadcast.viewings.where(
                     viewer_id: @user.id,
                     viewer_type: @user.class.name
-                ).impressions.ssshould eql? i
+                ).each {|viewing| viewing.impressions.should eql i + 1}
               end
             end
           end

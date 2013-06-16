@@ -12,7 +12,7 @@ describe Broadcasts::Viewing do
     end
 
     it 'must include only valid entries' do
-      @viewings.should include @user_viewings
+      (@viewings - @user_viewings).should be_empty
     end
 
     it 'must not include invalid entries' do
@@ -25,22 +25,22 @@ describe Broadcasts::Viewing do
 
     it 'must increase hidden viewings' do
       was_hidden_viewings_count = @viewing.broadcast.hidden_viewings_count
-      @viewing.hidden_at = Time.zone.now
+      @viewing.hidden_at = (Time.zone || DateTime).now
       @viewing.save
-      (@viewing.broadcast.hidden_viewings_count - was_hidden_viewings_count).should eql? 1
+      (@viewing.broadcast.hidden_viewings_count - was_hidden_viewings_count).should eql 1
     end
 
     it 'must decrease hidden viewings' do
       broadcast = @viewing.broadcast
       @viewing.destroy
-      (broadcast.hidden_viewings_count_was - broadcast.hidden_viewings_count).should eql? 1
+      (broadcast.hidden_viewings_count_was - broadcast.hidden_viewings_count).should eql 1
     end
 
     it 'must increase impressions' do
       was_impressions = @viewing.broadcast.impressions
       @viewing.impressions = @viewing.impressions + 1
       @viewing.save
-      (@viewing.broadcast.impressions - was_impressions).should eql? 1
+      (@viewing.broadcast.impressions - was_impressions).should eql 1
     end
   end
 end
