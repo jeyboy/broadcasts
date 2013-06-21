@@ -7,11 +7,11 @@ module Broadcasts
     #respond_to :js
 
     def index
-      respond_with (@broadcasts = Broadcasts::Broadcast.live(params[:count]))
+      respond_with (@broadcasts = Broadcasts::Broadcast.broadcast_list(current_user, params[:count]))
     end
 
     def destroy
-      Broadcasts::Viewing.by_viewer(current_user).where(id: params[:id]).update_all(hidden_at: (Time.zone || DateTime).now)
+      Broadcasts::Viewing.by_viewer(current_user).where(broadcast_id: params[:id]).each(&:hide)
       render nothing: true
     end
   end

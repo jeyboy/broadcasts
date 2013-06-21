@@ -1,7 +1,6 @@
 module Broadcasts
   class Broadcast < ::ActiveRecord::Base
     self.table_name = 'broadcasts'
-    #attr_accessible :title, :content, :start_at, :end_at, :creator, :hidden_viewings_count, :impressions
 
     has_many :viewings, dependent: :destroy
     belongs_to :creator, polymorphic: true
